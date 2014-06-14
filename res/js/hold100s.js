@@ -1,5 +1,3 @@
-//TODO 旋屏时resize
-
 document.addEventListener("DOMContentLoaded", function(e) {
 
     var config = {
@@ -63,6 +61,12 @@ document.addEventListener("DOMContentLoaded", function(e) {
         vy = speed * Math.sin(radian) >> 0;
         return {x: x, y: y, vx: vx, vy: vy};
     };
+
+    impony.reload = function () {
+        var t = setTimeout(function () {
+            location.reload();
+        }, 100);
+    }
 
     Q.Sprite.extend("Bullet", {
         init: function (p, stage) {
@@ -261,6 +265,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
         });
         Q.stageScene("start");
     });
+
+    window.addEventListener("orientationchange", impony.reload, false);
+    window.addEventListener("resize", impony.reload, false);
 
     Q.debug = false;
     Q.debugFill = false;
