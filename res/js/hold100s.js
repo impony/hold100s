@@ -142,15 +142,20 @@ document.addEventListener("DOMContentLoaded", function(e) {
             });
             this.times = 0;
             this.add("animation");
+            this.play("spaceship");
             this.on("hit", this, "collision");
         },
         collision: function(col) {
+            var endTime = + new Date();
+            Q("Bullet").destroy();
             // 第二个参数用来控制优先级
             this.play("explode", 1);
-            Q.stageScene("endGame", 1, {label: "坚持了 " + (+ new Date() - impony.time.start) / 1000 + " 秒"});
+            // 因为还没有研究明白如何播放动画后回调，所以只好用了一个延迟代替
+            var t = setTimeout(function () {
+                Q.stageScene("endGame", 1, {label: "坚持了 " + (endTime - impony.time.start) / 1000 + " 秒"});
+            }, 500);
         },
         step: function (dt) {
-            this.play("spaceship");
             this.stage.collide(this);
         }
     });
