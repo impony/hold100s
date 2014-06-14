@@ -152,7 +152,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 points: [[-2, -24], [-6, -16], [-6, -4], [-10, -1], [-10, 7], [11, 7], [11, -1], [8, -4], [8, -16], [4, -24]],
                 type: SPRITE_SPACESHIP
             });
-            this.times = 0;
             this.add("animation");
             this.play("spaceship");
             this.on("hit", this, "collision");
@@ -170,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
         step: function (dt) {
             this.stage.collide(this);
         }
+
     });
 
     Q.Sprite.extend("Title", {
@@ -184,14 +184,19 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 y: Q.height / 2 - 100,
             });
         }
+
     });
 
     Q.scene("start", new Q.Scene(function (stage) {
+
         var w = Q.width;
         var h = Q.height;
         impony.time.start = 0;
+
+        // 刚进游戏时，“坚持　百秒”字中间那个飞船动画
         stage.insert(new Q.Player({y: h / 2 - 95}));
         stage.insert(new Q.Title());
+
         var container = stage.insert(new Q.UI.Container({
             x: w / 2, y: h / 2, w: w, h: h, fill: "rgba(0, 0, 0, .1)"
         }));
@@ -204,29 +209,37 @@ document.addEventListener("DOMContentLoaded", function(e) {
         var version = container.insert(new Q.UI.Text({
             x: 0, y: h / 2 - 30, size: 10, color: "#333", align: "center", label: config.version
         }));
+
         startGame.on("click", function () {
             Q.clearStages();
             impony.time.start = + new Date();
             Q.stageScene("level1");
         });
+
     }));
 
     Q.scene("level1", new Q.Scene(function (stage) {
+
         var w = Q.width;
         var h = Q.height;
         var num = w * h / 8000 >> 0;
+        var player = new Q.Player();
+
         stage.insert(new Q.Mask({w: w * 2, h: h * 2}, stage));
-        stage.insert(new Q.Player());
-        var player = Q("Player").items[0].p;
+        stage.insert(player);
+        // 在窗口四个边随机生成一些目标是飞船的子弹
         for(var i = num; i--;) {
             stage.insert(new Q.Bullet(impony.direction({x: player.x, y: player.y}, Math.random() * 4 + 1 >> 0), stage));
         }
+
     }));
 
     Q.scene("endGame", function (stage) {
+
         Q.stageScene(null);
         var w = Q.width;
         var h = Q.height;
+
         var container = stage.insert(new Q.UI.Container({
             x: w / 2, y: h / 2, w: w, h: h, fill: "rgba(0, 0, 0, .1)"
         }));
@@ -245,6 +258,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
         var version = container.insert(new Q.UI.Text({
             x: 0, y: h / 2 - 30, size: 10, color: "#333", align: "center", label: config.version
         }));
+
         tryAgain.on("click", function () {
             Q.clearStages();
             impony.time.start = + new Date();
@@ -254,6 +268,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
             Q.clearStages();
             Q.stageScene("start");
         });
+
     });
 
     Q.load([
