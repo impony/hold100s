@@ -1,3 +1,5 @@
+//TODO 旋屏时resize
+
 document.addEventListener("DOMContentLoaded", function(e) {
 
     var config = {
@@ -30,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
             randomX = Math.random() * Q.width >> 0,
             randomY = Math.random() * Q.height >> 0,
             radian = 0,
-            speed = Math.random() * 4 + 1 >> 0,
+            speed = Math.random() * 5 + 1 >> 0,
             vx = 0,
             vy = 0;
         switch(side) {
@@ -190,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
             x: 0, y: h / 2 - 60, size: 12, color: "#666", align: "center", label: "impony@vip.qq.com"
         }));
         var version = container.insert(new Q.UI.Text({
-            x: 0, y: h / 2 - 40, size: 10, color: "#333", align: "center", label: "v201406141725"
+            x: 0, y: h / 2 - 40, size: 10, color: "#333", align: "center", label: "v0.1.20140614"
         }));
         startGame.on("click", function () {
             Q.clearStages();
@@ -202,10 +204,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
     Q.scene("level1", new Q.Scene(function (stage) {
         var w = Q.width;
         var h = Q.height;
+        var num = w * h / 8000 >> 0;
         stage.insert(new Q.Mask({w: w * 2, h: h * 2}, stage));
         stage.insert(new Q.Player());
         var player = Q("Player").items[0].p;
-        for(var i = 12; i--;) {
+        for(var i = num; i--;) {
             stage.insert(new Q.Bullet(impony.direction({x: player.x, y: player.y}, Math.random() * 4 + 1 >> 0), stage));
         }
     }));
@@ -260,6 +263,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
     });
 
     Q.debug = false;
-    Q.debugFill = true;
+    Q.debugFill = false;
 
 });

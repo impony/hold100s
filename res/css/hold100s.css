@@ -1,7 +1,5 @@
 body {
     overflow: hidden;
-    margin: 0;
-    padding: 0;
     background: #000 url("../img/bg.png");
     background-size: 100% auto;
 }
