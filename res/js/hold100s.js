@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
             js: "../res/js/",
             data: "../res/data/",
             img: "../res/img/"
-        }
+        },
+        author: "impony@vip.qq.com",
+        version: "v0.1.20140614"
     };
 
     // 增加类型，用来碰撞检测
@@ -13,11 +15,13 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     // 把用到的模块包含进来
     var Q = Q || Quintus().include("Sprites, Scenes, Input, Touch, 2D, Anim, UI");
+
     // 定义一个全屏的 canvas，并对类型为 SPRITE_FRIENDLY 的精灵支持 touch
     Q.setup({ maximize: true }).touch(Q.SPRITE_FRIENDLY);
 
     var impony = impony || {};
 
+    // 用来记录游戏开始时间，存储的为时间戳
     impony.time = {
         start: 0
     };
@@ -62,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
         return {x: x, y: y, vx: vx, vy: vy};
     };
 
+    // 没有比较好的锁定屏幕方向的办法，所以只好退而求其次当屏幕旋转时重载页面
     impony.reload = function () {
         var t = setTimeout(function () {
             location.reload();
@@ -72,7 +77,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
         init: function (p, stage) {
             this._super(p, {
                 collisionMask: SPRITE_SPACESHIP,
-                color: "red",
+                sheet: "bullet",
+                sprite: "bullet",
                 w: 5,
                 h: 5,
                 x: 0,
@@ -193,10 +199,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
             x: 0, y: 0, fill: "rgba(255, 255, 255, .7)", label: "开始游戏", type: Q.SPRITE_FRIENDLY
         }));
         var author = container.insert(new Q.UI.Text({
-            x: 0, y: h / 2 - 60, size: 12, color: "#666", align: "center", label: "impony@vip.qq.com"
+            x: 0, y: h / 2 - 50, size: 12, color: "#666", align: "center", label: config.author
         }));
         var version = container.insert(new Q.UI.Text({
-            x: 0, y: h / 2 - 40, size: 10, color: "#333", align: "center", label: "v0.1.20140614"
+            x: 0, y: h / 2 - 30, size: 10, color: "#333", align: "center", label: config.version
         }));
         startGame.on("click", function () {
             Q.clearStages();
@@ -219,8 +225,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     Q.scene("endGame", function (stage) {
         Q.stageScene(null);
+        var w = Q.width;
+        var h = Q.height;
         var container = stage.insert(new Q.UI.Container({
-            x: Q.width/2, y: Q.height/2, w: Q.width, h: Q.height, fill: "rgba(0, 0, 0, .1)"
+            x: w / 2, y: h / 2, w: w, h: h, fill: "rgba(0, 0, 0, .1)"
         }));
         var tryAgain = container.insert(new Q.UI.Button({
             x: 0, y: 0, fill: "rgba(255, 255, 255, .7)", label: "再试一次", type: Q.SPRITE_FRIENDLY
@@ -230,6 +238,12 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }));
         var label = container.insert(new Q.UI.Text({
             x: 0, y: -20 - tryAgain.p.h, color: "#CCC", align: "center", label: stage.options.label
+        }));
+        var author = container.insert(new Q.UI.Text({
+            x: 0, y: h / 2 - 50, size: 12, color: "#666", align: "center", label: config.author
+        }));
+        var version = container.insert(new Q.UI.Text({
+            x: 0, y: h / 2 - 30, size: 10, color: "#333", align: "center", label: config.version
         }));
         tryAgain.on("click", function () {
             Q.clearStages();
@@ -243,13 +257,16 @@ document.addEventListener("DOMContentLoaded", function(e) {
     });
 
     Q.load([
-        config.path.data + "spaceship.json",
-        config.path.img + "spaceship.png",
         config.path.data + "title.json",
         config.path.img + "title.png",
+        config.path.data + "bullet.json",
+        config.path.img + "bullet.png",
+        config.path.data + "spaceship.json",
+        config.path.img + "spaceship.png",
         config.path.img + "bg.png"
     ], function() {
         Q.compileSheets(config.path.img + "title.png", config.path.data + "title.json");
+        Q.compileSheets(config.path.img + "bullet.png", config.path.data + "bullet.json");
         Q.compileSheets(config.path.img + "spaceship.png", config.path.data + "spaceship.json");
         // 飞船精灵动画
         Q.animations("spaceship", {
