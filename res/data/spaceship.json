@@ -1,0 +1,10 @@
+{
+    "spaceship": {
+        "sx": 0,
+        "sy": 0,
+        "cols": 21,
+        "tilew": 52,
+        "tileh": 48,
+        "frames": 21
+    }
+}
