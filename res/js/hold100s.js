@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(e) {
+window.addEventListener("load", function(e) {
 
     var config = {
         path: {
