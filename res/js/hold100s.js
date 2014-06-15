@@ -28,13 +28,13 @@ window.addEventListener("load", function(e) {
 
     // 根据飞船位置，从屏幕四边随机生成一些随机座标和随机速度并返回
     impony.direction = function (playerPos, side) {
-        var playerPos = playerPos || {x: 0, y: 0};
-        var x = 0,
+        var playerPos = playerPos || {x: 0, y: 0},
+            x = 0,
             y = 0,
             randomX = Math.random() * Q.width >> 0,
             randomY = Math.random() * Q.height >> 0,
             radian = 0,
-            speed = Math.random() * 5 + 1 >> 0,
+            speed = Math.random() * 4 + 1 >> 0,
             vx = 0,
             vy = 0;
         switch(side) {
