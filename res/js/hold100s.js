@@ -214,7 +214,7 @@ window.addEventListener("load", function(e) {
             x: 0, y: 0, fill: "rgba(255, 255, 255, .7)", label: "开始游戏", type: Q.SPRITE_FRIENDLY
         }));
         var author = container.insert(new Q.UI.Text({
-            x: 0, y: h / 2 - 50, size: 12, color: "#666", align: "center", label: config.author
+            x: 0, y: h / 2 - 50, size: 12, color: "#333", align: "center", label: config.author
         }));
         var version = container.insert(new Q.UI.Text({
             x: 0, y: h / 2 - 30, size: 10, color: "#333", align: "center", label: config.version
@@ -263,7 +263,7 @@ window.addEventListener("load", function(e) {
             x: 0, y: -20 - tryAgain.p.h, color: "#CCC", align: "center", label: stage.options.label
         }));
         var author = container.insert(new Q.UI.Text({
-            x: 0, y: h / 2 - 50, size: 12, color: "#666", align: "center", label: config.author
+            x: 0, y: h / 2 - 50, size: 12, color: "#333", align: "center", label: config.author
         }));
         var version = container.insert(new Q.UI.Text({
             x: 0, y: h / 2 - 30, size: 10, color: "#333", align: "center", label: config.version
