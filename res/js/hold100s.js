@@ -7,7 +7,7 @@ window.addEventListener("load", function(e) {
             img: "../res/img/"
         },
         author: "impony@vip.qq.com",
-        version: "v0.1.20140614"
+        version: "v0.1.3"
     };
 
     // 增加类型，用来碰撞检测
@@ -18,6 +18,16 @@ window.addEventListener("load", function(e) {
 
     // 定义一个全屏的 canvas，并对类型为 SPRITE_FRIENDLY 的精灵支持 touch
     Q.setup({ maximize: true }).touch(Q.SPRITE_FRIENDLY);
+
+    // 缩放画布，以适应视网膜屏等
+    var ratio = window.devicePixelRatio || 1;
+    if (ratio > 1) {
+        Q.el.width = Q.width * ratio;
+        Q.el.height = Q.height * ratio;
+        Q.el.style.width = Q.width + "px";
+        Q.el.style.height = Q.height + "px";
+        Q.ctx.scale(ratio, ratio);
+    }
 
     var impony = impony || {};
 
